@@ -449,45 +449,46 @@ img { display: block; max-width: 100%; }
   .language-switch button { font-size: 10px; padding: 4px; }
 }
 
-
-
 /* ========================================================= */
-/* تفکیک کادرهای صفحه محاسبات (سازگار ۱۰۰٪ با ویندوز ۷) */
+/* تفکیک کادرهای صفحه محاسبات ABAS SOFT                       */
 /* ========================================================= */
 
-/* ۱. کادر بالایی: مشخصات اولیه و فرم ورود اعداد (نوار آبی) */
-form {
-  background: #131928 !important;
-  border: 1px solid #1e2f4d !important;
+/* ۱. کادر بالایی: مشخصات اولیه و ورودی‌ها (نوار آبی) */
+main div:has(input),
+main div:has(select) {
+  background: #121828 !important;
+  border: 1px solid #1e2f4e !important;
   border-right: 6px solid #3b82f6 !important; /* نوار آبی مهندسی */
-  border-radius: 12px !important;
+  border-radius: 14px !important;
   padding: 20px !important;
   margin-bottom: 24px !important;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4) !important;
 }
 
 /* ۲. کادر پایینی: برگه نتایج و محاسبات (نوار مسی) */
-main section > div > div:last-child {
+main div:has(button) {
   background: #1c1511 !important;
   border: 1px solid #3f2a1b !important;
-  border-right: 6px solid #d8a77f !important; /* نوار مسی/طلایی */
-  border-radius: 12px !important;
+  border-right: 6px solid #d8a77f !important; /* نوار مسی */
+  border-radius: 14px !important;
   padding: 20px !important;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* ۳. کادرهای ورودی اعداد و منوهای کشویی */
-input, select {
+/* ۳. کادرهای ورود عدد (ورودی‌های ۵، ۱۲، ۲۶۵، ۸۵) */
+input[type="text"],
+input[type="number"],
+select {
   background-color: #0b0f19 !important;
-  border: 1px solid #2b3a58 !important;
-  color: #60a5fa !important; /* رنگ آبی روشن برای اعداد تایپ شده */
-  border-radius: 6px !important;
-  padding: 8px 12px !important;
+  border: 1px solid #2d3e5e !important;
+  color: #60a5fa !important; /* رنگ آبی درخشان برای اعداد */
+  border-radius: 8px !important;
+  font-size: 15px !important;
   font-weight: bold !important;
 }
 
-/* رنگ کادرهای عدد هنگام کلیک کردن روی آن‌ها */
 input:focus, select:focus {
   border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25) !important;
   outline: none !important;
 }
