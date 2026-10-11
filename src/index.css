@@ -450,41 +450,51 @@ img { display: block; max-width: 100%; }
 }
 
 /* ========================================================= */
-/* استایل اختصاصی "صفحه دوم" (صفحه محاسبات و برگه طراحی)    */
-/* (صفحه اول کاملاً بدون تغییر و فابریک باقی می‌ماند)        */
+/* تفکیک کادرهای صفحه دوم (سازگار ۱۰۰٪ با ویندوز ۷ و فایرفاکس)  */
 /* ========================================================= */
 
-/* ۱. باکس بالایی صفحه دوم: مشخصات اولیه و ورودی اعداد (نوار آبی) */
-main div:has(> div > input[type="number"]),
-main div:has(> input[type="number"]) {
-  background: #121828 !important;
+/* ۱. قفل کردن صفحه اول (خانه و درباره ما بدون تغییر می‌مانند) */
+#home, #calculations, #about, .hero, .about-section {
+  border-right: none !important;
+}
+
+/* ۲. باکس بالایی صفحه دوم: مشخصات اولیه و ورود اعداد (نوار آبی) */
+main section:not(#home):not(#calculations):not(#about) > div:first-child,
+main > div:not(#home):not(#calculations):not(#about) > div:first-child {
+  background-color: #121828 !important;
   border: 1px solid #1e2f4e !important;
   border-right: 6px solid #3b82f6 !important; /* نوار آبی مهندسی */
   border-radius: 14px !important;
-  padding: 24px !important;
-  margin-bottom: 28px !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45) !important;
+  padding: 22px !important;
+  margin-bottom: 26px !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45) !important;
 }
 
-/* ۲. کادرهای ورود عدد داخل باکس اول (ولتاژ، جریان و...) */
+/* ۳. کادرهای ورود عدد داخل باکس بالا (ورودی‌های ۸۵، ۲۶۵، ۱۲، ۵) */
+main input[type="text"],
 main input[type="number"],
 main select {
   background-color: #0b0f19 !important;
   border: 1px solid #2d3e5e !important;
-  color: #60a5fa !important; /* رنگ آبی درخشان اعداد تایپ شده */
+  color: #60a5fa !important; /* رنگ آبی درخشان اعداد تایپ‌شده */
   border-radius: 8px !important;
-  font-size: 16px !important;
+  font-size: 15px !important;
   font-weight: bold !important;
 }
 
-/* ۳. باکس پایینی صفحه دوم: برگه طراحی و خروجی محاسبات (نوار مسی) */
-main section > div > div:last-child,
-main div[class*="worksheet"],
-main div[class*="results"] {
-  background: #1c1511 !important;
+main input:focus, main select:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25) !important;
+  outline: none !important;
+}
+
+/* ۴. باکس پایینی صفحه دوم: برگه نتایج و طراحی (نوار مسی) */
+main section:not(#home):not(#calculations):not(#about) > div:last-child,
+main > div:not(#home):not(#calculations):not(#about) > div:last-child {
+  background-color: #1c1511 !important;
   border: 1px solid #3f2a1b !important;
   border-right: 6px solid #d8a77f !important; /* نوار مسی / طلایی */
   border-radius: 14px !important;
-  padding: 24px !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45) !important;
+  padding: 22px !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45) !important;
 }
