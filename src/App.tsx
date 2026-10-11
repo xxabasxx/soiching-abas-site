@@ -108,7 +108,7 @@ function AbasSite() {
             </div>
           </section>
 
-                              <section className="about-section" id="about" data-page-section aria-labelledby="about-title">
+                    <section className="about-section" id="about" data-page-section aria-labelledby="about-title">
             <motion.div className="site-container about-inner" initial={{ opacity: 0, y: reducedMotion ? 0 : 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .25 }} transition={{ duration: .65 }}>
               <div className="about-heading"><span className="section-eyebrow" dir="ltr">BUILT FOR PRECISE MINDS</span><h2 id="about-title">{t('تمرکز روی طراحی.', 'Focus on the design.')}<br /><span>{t('بقیه‌اش ساده است.', 'Keep everything else simple.')}</span></h2></div>
               <div className="about-copy">
