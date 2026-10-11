@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { ArrowDownLeft, ArrowLeft, ArrowUp, ArrowUpLeft, BookOpen, Download, Menu, X } from 'lucide-react';
+import { ArrowDownLeft, ArrowLeft, ArrowUp, ArrowUpLeft, BookOpen, Menu, X } from 'lucide-react';
 import { Brand } from './components/Brand';
 import { ModuleCard } from './components/ModuleCard';
 import { GuideDialog } from './components/GuideDialog';
-import { OfflineDownloadPage } from './components/OfflineDownload';
 import { loadModules } from './lib/modules';
 import { cacheCalculatorFonts } from './lib/calculationRuntime';
 import { DEFAULT_MODULES, HERO_URL } from './types';
@@ -13,7 +12,11 @@ import { LanguageProvider, LanguageSwitch, useLanguage } from './lib/language';
 type Section = 'home' | 'calculations' | 'about';
 
 export default function App() {
-  return <LanguageProvider>{new URLSearchParams(window.location.search).get('download') === '1' ? <OfflineDownloadPage /> : <AbasSite />}</LanguageProvider>;
+  return (
+    <LanguageProvider>
+      <AbasSite />
+    </LanguageProvider>
+  );
 }
 
 function AbasSite() {
@@ -21,7 +24,7 @@ function AbasSite() {
   const [modules, setModules] = useState(DEFAULT_MODULES);
   const [activeSection, setActiveSection] = useState<Section>('home');
   const [menuOpen, setMenuOpen] = useState(false);
-  const [dialog, setDialog] = useState<'help' | 'setup' | 'offline' | null>(null);
+  const [dialog, setDialog] = useState<'help' | 'setup' | null>(null);
   const headerRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const reducedMotion = useReducedMotion();
@@ -62,7 +65,7 @@ function AbasSite() {
     };
   }, [menuOpen]);
 
-  const openGuide = (mode: 'help' | 'setup' | 'offline') => {
+  const openGuide = (mode: 'help' | 'setup') => {
     setMenuOpen(false);
     setDialog(mode);
   };
@@ -108,18 +111,14 @@ function AbasSite() {
             </div>
           </section>
 
-                    <section className="about-section" id="about" data-page-section aria-labelledby="about-title">
+          <section className="about-section" id="about" data-page-section aria-labelledby="about-title">
             <motion.div className="site-container about-inner" initial={{ opacity: 0, y: reducedMotion ? 0 : 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .25 }} transition={{ duration: .65 }}>
               <div className="about-heading"><span className="section-eyebrow" dir="ltr">BUILT FOR PRECISE MINDS</span><h2 id="about-title">{t('تمرکز روی طراحی.', 'Focus on the design.')}<br /><span>{t('بقیه‌اش ساده است.', 'Keep everything else simple.')}</span></h2></div>
               <div className="about-copy">
                 <p>{t('ABAS SOFT، نقطه شروع طراحی منبع تغذیه شماست. چهار مسیر مستقل برای دسترسی به محاسبات تخصصی، تا بین شما و ایده بعدی‌تان، چیزی جز یک کلیک نباشد.', 'ABAS SOFT is your starting point for power supply design. Four focused worksheets put the next step of your design just one click away.')}</p>
 
-                {/* ================================================= */}
-                {/* بخش تماس و حمایت مالی (بدون کادر + کپی با کلیک) */}
-                {/* ================================================= */}
+                {/* بخش تماس و حمایت مالی با کپی هوشمند */}
                 <div style={{ margin: '25px 0', fontSize: '14px', lineHeight: '1.8' }}>
-                  
-                  {/* ایمیل رسمی */}
                   <div style={{ marginBottom: '15px' }}>
                     <span style={{ color: '#eeeaf3', fontWeight: 'bold' }}>
                       {t('✉️ تماس و پشتیبانی رسمی: ', '✉️ Official Contact & Support: ')}
@@ -140,7 +139,6 @@ function AbasSite() {
                     </button>
                   </div>
 
-                  {/* بخش حمایت مالی */}
                   <div>
                     <span style={{ color: '#eeeaf3', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>
                       {t('☕ حمایت از پروژه (USDT - TRC20):', '☕ Support Project (USDT - TRC20):')}
@@ -164,7 +162,6 @@ function AbasSite() {
                       TABCDEF123456789YourWalletAddress
                     </button>
                   </div>
-
                 </div>
 
                 <a href="#calculations">{t('مسیر طراحی‌تان را انتخاب کنید', 'Choose your design stage')}<ArrowUpLeft size={18} /></a>
@@ -174,9 +171,18 @@ function AbasSite() {
           </section>
         </main>
 
-        <footer className="site-footer"><div className="site-container footer-inner"><a href="#home" aria-label={t('بازگشت به ابتدای سایت', 'Back to top')}><Brand compact /></a><p>{t('برای مهندسانی که به جزئیات اهمیت می‌دهند.', 'For engineers who care about the details.')}<span dir="ltr">ABAS SOFT / ENGINEERED FOR PRECISION</span></p><div className="footer-actions"><button className="offline-download-link" onClick={() => openGuide('offline')}><Download size={14} />{t('دانلود نسخه آفلاین', 'Download offline')}</button><button onClick={() => openGuide('setup')}>{t('راهنمای پروژه و گزارش', 'Projects & reports')}<ArrowUpLeft size={14} /></button><a className="back-to-top" href="#home" aria-label={t('بازگشت به بالای صفحه', 'Back to top')}><ArrowUp size={17} /></a></div></div></footer>
+        <footer className="site-footer">
+          <div className="site-container footer-inner">
+            <a href="#home" aria-label={t('بازگشت به ابتدای سایت', 'Back to top')}><Brand compact /></a>
+            <p>{t('برای مهندسانی که به جزئیات اهمیت می‌دهند.', 'For engineers who care about the details.')}<span dir="ltr">ABAS SOFT / ENGINEERED FOR PRECISION</span></p>
+            <div className="footer-actions">
+              <button onClick={() => openGuide('setup')}>{t('راهنمای پروژه و گزارش', 'Projects & reports')}<ArrowUpLeft size={14} /></button>
+              <a className="back-to-top" href="#home" aria-label={t('بازگشت به بالای صفحه', 'Back to top')}><ArrowUp size={17} /></a>
+            </div>
+          </div>
+        </footer>
       </div>
-      <AnimatePresence>{dialog && <GuideDialog key={dialog} mode={dialog} onClose={() => setDialog(null)} onStart={startCalculations} onOffline={() => setDialog('offline')} />}</AnimatePresence>
+      <AnimatePresence>{dialog && <GuideDialog key={dialog} mode={dialog} onClose={() => setDialog(null)} onStart={startCalculations} />}</AnimatePresence>
     </>
   );
 }
