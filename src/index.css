@@ -498,3 +498,16 @@ main > div:not(#home):not(#calculations):not(#about) > div:last-child {
   padding: 22px !important;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45) !important;
 }
+
+
+/* ========================================================= */
+/* مخفی کردن کامل نوار نمایش فرمول‌ها (fx) از صفحه محاسبات   */
+/* ========================================================= */
+
+.formula-bar,
+.worksheet-formula,
+[class*="formula"],
+div:has(> span:contains("fx")),
+.fx-bar {
+  display: none !important;
+}
