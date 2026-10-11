@@ -511,3 +511,32 @@ div:has(> span:contains("fx")),
 .fx-bar {
   display: none !important;
 }
+
+
+
+/* ========================================================= */
+/* قابلیت چاپ انتخابی ردیف‌ها (سازگار ۱۰۰٪ با ویندوز ۷)         */
+/* ========================================================= */
+
+/* استایل مربع چک‌باکس کنار شماره ردیف‌ها در سایت */
+.print-check {
+  cursor: pointer !important;
+  margin-left: 8px !important;
+  accent-color: #d8a77f !important; /* رنگ مسی متناسب با برند ABAS SOFT */
+  width: 15px !important;
+  height: 15px !important;
+  vertical-align: middle !important;
+}
+
+/* دستورات مخصوص هنگام پرینت (Ctrl + P) */
+@media print {
+  /* مخفی کردن خودِ مربعات چک‌باکس روی کاغذ */
+  .print-check {
+    display: none !important;
+  }
+
+  /* مخفی کردن کامل ردیف‌هایی که تیک آن‌ها برداشته شده است */
+  tr.no-print {
+    display: none !important;
+  }
+}
