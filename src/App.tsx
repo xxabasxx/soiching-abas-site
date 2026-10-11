@@ -108,10 +108,71 @@ function AbasSite() {
             </div>
           </section>
 
-          <section className="about-section" id="about" data-page-section aria-labelledby="about-title">
+                    <section className="about-section" id="about" data-page-section aria-labelledby="about-title">
             <motion.div className="site-container about-inner" initial={{ opacity: 0, y: reducedMotion ? 0 : 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .25 }} transition={{ duration: .65 }}>
               <div className="about-heading"><span className="section-eyebrow" dir="ltr">BUILT FOR PRECISE MINDS</span><h2 id="about-title">{t('تمرکز روی طراحی.', 'Focus on the design.')}<br /><span>{t('بقیه‌اش ساده است.', 'Keep everything else simple.')}</span></h2></div>
-              <div className="about-copy"><p>{t('ABAS SOFT، نقطه شروع طراحی منبع تغذیه شماست. چهار مسیر مستقل برای دسترسی به محاسبات تخصصی، تا بین شما و ایده بعدی‌تان، چیزی جز یک کلیک نباشد.', 'ABAS SOFT is your starting point for power supply design. Four focused worksheets put the next step of your design just one click away.')}</p><a href="#calculations">{t('مسیر طراحی‌تان را انتخاب کنید', 'Choose your design stage')}<ArrowUpLeft size={18} /></a></div>
+              <div className="about-copy">
+                <p>{t('ABAS SOFT، نقطه شروع طراحی منبع تغذیه شماست. چهار مسیر مستقل برای دسترسی به محاسبات تخصصی، تا بین شما و ایده بعدی‌تان، چیزی جز یک کلیک نباشد.', 'ABAS SOFT is your starting point for power supply design. Four focused worksheets put the next step of your design just one click away.')}</p>
+
+                {/* ======================================================= */}
+                {/* باکس شیک و رسمی تماس با ما و حمایت مالی (دو زبانه) */}
+                {/* ======================================================= */}
+                <div style={{
+                  marginTop: '20px',
+                  marginBottom: '20px',
+                  padding: '18px',
+                  borderRadius: '12px',
+                  background: 'rgba(25, 21, 31, 0.75)',
+                  border: '1px solid rgba(216, 167, 127, 0.35)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '12px',
+                  textAlign: 'right'
+                }}>
+                  {/* ۱. ایمیل رسمی پشتیبانی */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', fontSize: '14px' }}>
+                    <span style={{ color: '#eeeaf3', fontWeight: 'bold' }}>
+                      {t('✉️ تماس و پشتیبانی رسمی:', '✉️ Official Contact & Support:')}
+                    </span>
+                    <a href="mailto:xxabasxxsoft@gmail.com" style={{ color: 'var(--copper, #d8a77f)', fontWeight: 'bold', textDecoration: 'underline' }} dir="ltr">
+                      xxabasxxsoft@gmail.com
+                    </a>
+                  </div>
+
+                  <hr style={{ border: 'none', borderTop: '1px solid rgba(201, 182, 224, 0.15)', margin: '2px 0' }} />
+
+                  {/* ۲. بخش حمایت مالی پروژه */}
+                  <div>
+                    <strong style={{ color: '#eeeaf3', display: 'block', marginBottom: '6px', fontSize: '14px' }}>
+                      {t('☕ حمایت از توسعه ABAS SOFT:', '☕ Support Project Development:')}
+                    </strong>
+                    <p style={{ fontSize: '12px', color: '#9b91a8', marginBottom: '10px', lineHeight: '1.6' }}>
+                      {t(
+                        'اگر محاسبات این ابزار به پروژه‌تان کمک کرده، می‌توانید از استمرار توسعه، سرورها و ارتقای آن حمایت کنید.',
+                        'If this tool helped your engineering work, consider supporting server maintenance and ongoing updates.'
+                      )}
+                    </p>
+
+                    {language === 'fa' ? (
+                      /* کد حمایت مالی برای زبان فارسی */
+                      <div style={{ fontSize: '12px', color: '#eeeaf3', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                        <div>• <strong>حمایت ریالی:</strong> به زودی (جهت دریافت شماره کارت مستقیم می‌توانید ایمیل بزنید).</div>
+                        <div dir="ltr" style={{ fontSize: '12px', color: 'var(--copper, #d8a77f)', textAlign: 'right' }}>
+                          • <strong>تتر (USDT - TRC20):</strong> <code style={{ background: '#100e15', padding: '3px 8px', borderRadius: '4px', border: '1px solid #332840' }}>آدرس کیف پول تتر</code>
+                        </div>
+                      </div>
+                    ) : (
+                      /* کد حمایت مالی برای زبان انگلیسی (تتر و بیت‌کوین) */
+                      <div style={{ fontSize: '12px', color: '#eeeaf3', display: 'flex', flexDirection: 'column', gap: '6px' }} dir="ltr">
+                        <div>• <strong>USDT (TRC20):</strong> <code style={{ background: '#100e15', padding: '3px 8px', borderRadius: '4px', color: 'var(--copper, #d8a77f)', border: '1px solid #332840' }}>Your USDT Wallet Address</code></div>
+                        <div>• <strong>Bitcoin (BTC):</strong> <code style={{ background: '#100e15', padding: '3px 8px', borderRadius: '4px', color: 'var(--copper, #d8a77f)', border: '1px solid #332840' }}>Your BTC Wallet Address</code></div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <a href="#calculations">{t('مسیر طراحی‌تان را انتخاب کنید', 'Choose your design stage')}<ArrowUpLeft size={18} /></a>
+              </div>
               <svg className="about-wave" viewBox="0 0 220 64" fill="none" aria-hidden="true"><path d="M0 32h35l14-19 19 41L90 4l25 55 19-43 18 32 12-16h56" stroke="currentColor" strokeWidth="1.4" /></svg>
             </motion.div>
           </section>
