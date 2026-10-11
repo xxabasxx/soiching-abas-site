@@ -1,7 +1,7 @@
 (function (global) {
   'use strict';
 
-  var VERSION = '2.5.0';
+  var VERSION = '2.6.0';
   var SUPPLY_TYPE = 'ac-dc-isolated';
   var TOPOLOGY = 'flyback-dcm';
 
@@ -132,7 +132,7 @@
   row('input', 'پل و جریان شبکه', 'bridgeLoss', 'تلفات تقریبی پل دیود', 'W', div(mul(2, 'bridgeV', 'pin'), 'busMin'));
   row('input', 'پل و جریان شبکه', 'bridgeVr', 'حداقل ریتینگ ولتاژ معکوس پل', 'V', mul('rectMax', margin('voltMargin')));
   row('input', 'پل و جریان شبکه', 'fuseBase', 'مبنای اولیه جریان فیوز', 'A', mul('lineRms', 1.6));
-  row('input', 'پل و جریان شبکه', 'bridgeRec', 'پل دیود ورودی پیشنهادی بازار', '', 0);
+  row('input', 'پیشنهاد قطعه تجاری', 'bridgeRec', 'پل دیود ورودی پیشنهادی بازار', '', 0);
 
   row('input', 'خازن بالک', 'bulkRipple', 'ظرفیت از ریپل نیم‌دوره', 'uF', div(mul('pin', 1e6), mul('mainsHz', sub(sq('rectMin'), sq('busMin')))));
   row('input', 'خازن بالک', 'bulkHold', 'ظرفیت از انرژی نگه‌داری', 'uF', div(mul(2, 'pin', 'holdMs', 1000), sub(sq('busMin'), sq('holdCutoff'))));
@@ -323,56 +323,63 @@
       values[r.key] = n;
     });
 
-    // --- منطق هوشمند تعیین شماره قطعات تجاری بازار ---
+    // --- منطق تعیین شماره قطعات تجاری (انتقال به ستون توضیحات) ---
     var pout = values.pout || (values.vo * values.io);
     var pin = values.pin || (pout / 0.85);
     var vdsRating = values.vdsRating || 650;
     var lineRms = values.lineRms || 1;
 
     // ۱. پل دیود ورودی
-    var bridgeRec = "KBP206 / KBP310 (2A-3A)";
-    if (lineRms > 1.5 && lineRms <= 4) bridgeRec = "GBU608 / GBU808 (6A-8A)";
-    else if (lineRms > 4) bridgeRec = "GBPC1510 / GBPC2510 (15A-25A)";
+    var bridgeRec = "پیشنهاد: KBP206 / KBP310 (2A-3A)";
+    if (lineRms > 1.5 && lineRms <= 4) bridgeRec = "پیشنهاد: GBU608 / GBU808 (6A-8A)";
+    else if (lineRms > 4) bridgeRec = "پیشنهاد: GBPC1510 / GBPC2510 (15A-25A)";
 
     // ۲. هسته ترانس
-    var suggestedCore = "EE16 / EE19 / EFD15";
-    if (pout > 15 && pout <= 35) suggestedCore = "EE22 / EE25 / EFD20";
-    else if (pout > 35 && pout <= 75) suggestedCore = "EE28 / EFD25 / PQ2620";
-    else if (pout > 75 && pout <= 130) suggestedCore = "ETD29 / ETD34 / PQ3220";
-    else if (pout > 130 && pout <= 200) suggestedCore = "ETD39 / ETD44 / PQ3230";
-    else if (pout > 200) suggestedCore = "ETD49 / ETD59 (توان بالای ۲۰۰W)";
+    var suggestedCore = "پیشنهاد: EE16 / EE19 / EFD15";
+    if (pout > 15 && pout <= 35) suggestedCore = "پیشنهاد: EE22 / EE25 / EFD20";
+    else if (pout > 35 && pout <= 75) suggestedCore = "پیشنهاد: EE28 / EFD25 / PQ2620";
+    else if (pout > 75 && pout <= 130) suggestedCore = "پیشنهاد: ETD29 / ETD34 / PQ3220";
+    else if (pout > 130 && pout <= 200) suggestedCore = "پیشنهاد: ETD39 / ETD44 / PQ3230";
+    else if (pout > 200) suggestedCore = "پیشنهاد: ETD49 / ETD59 (توان بالای ۲۰۰W)";
 
     // ۳. ماسفت قدرت
-    var suggestedMosfet = "4N60 / 2N60";
+    var suggestedMosfet = "پیشنهاد: 4N60 / 2N60";
     if (vdsRating <= 650) {
-      if (pin > 20 && pin <= 60) suggestedMosfet = "7N60 / 10N60 / IRF840";
-      else if (pin > 60 && pin <= 120) suggestedMosfet = "12N60 / SPA11N60 / FFQ13N60";
-      else if (pin > 120) suggestedMosfet = "20N60 / SPA20N60 / STW26NM60N";
+      if (pin > 20 && pin <= 60) suggestedMosfet = "پیشنهاد: 7N60 / 10N60 / IRF840";
+      else if (pin > 60 && pin <= 120) suggestedMosfet = "پیشنهاد: 12N60 / SPA11N60 / FFQ13N60";
+      else if (pin > 120) suggestedMosfet = "پیشنهاد: 20N60 / SPA20N60 / STW26NM60N";
     } else {
-      if (pin <= 60) suggestedMosfet = "6N80 / 4N80";
-      else if (pin > 60 && pin <= 120) suggestedMosfet = "10N80 / STP10NK80Z";
-      else if (pin > 120) suggestedMosfet = "12N90 / STW12NK90Z";
+      if (pin <= 60) suggestedMosfet = "پیشنهاد: 6N80 / 4N80";
+      else if (pin > 60 && pin <= 120) suggestedMosfet = "پیشنهاد: 10N80 / STP10NK80Z";
+      else if (pin > 120) suggestedMosfet = "پیشنهاد: 12N90 / STW12NK90Z";
     }
 
     // ۴. دیود خروجی
-    var suggestedDiode = "1N5822 / MBR3100";
+    var suggestedDiode = "پیشنهاد: 1N5822 / MBR3100";
     if (values.vo <= 28) {
-      if (values.io > 3 && values.io <= 10) suggestedDiode = "MBR10100 / SR10100";
-      else if (values.io > 10) suggestedDiode = "MBR20100 / MBR30100";
+      if (values.io > 3 && values.io <= 10) suggestedDiode = "پیشنهاد: MBR10100 / SR10100";
+      else if (values.io > 10) suggestedDiode = "پیشنهاد: MBR20100 / MBR30100";
     } else {
-      if (values.io <= 3) suggestedDiode = "HER308 / UF5408";
-      else if (values.io > 3 && values.io <= 10) suggestedDiode = "MUR860 / BYW29-200";
-      else if (values.io > 10) suggestedDiode = "MUR1560 / FEP16BT";
+      if (values.io <= 3) suggestedDiode = "پیشنهاد: HER308 / UF5408";
+      else if (values.io > 3 && values.io <= 10) suggestedDiode = "پیشنهاد: MUR860 / BYW29-200";
+      else if (values.io > 10) suggestedDiode = "پیشنهاد: MUR1560 / FEP16BT";
     }
-
-    values.bridgeRec = bridgeRec;
-    values.suggestedCore = suggestedCore;
-    values.suggestedMosfet = suggestedMosfet;
-    values.suggestedDiode = suggestedDiode;
 
     plan.rows.forEach(function (r) {
       var val = values[r.key];
-      computed.push(Object.assign({}, r, { value: val, formula: formula(r.expr, symbols) }));
+      var noteText = r.note || '';
+
+      // انتقال شماره قطعات به ستون توضیحات (ستون سمت چپ)
+      if (r.key === 'bridgeRec') noteText = bridgeRec;
+      if (r.key === 'suggestedCore') noteText = suggestedCore;
+      if (r.key === 'suggestedMosfet') noteText = suggestedMosfet;
+      if (r.key === 'suggestedDiode') noteText = suggestedDiode;
+
+      computed.push(Object.assign({}, r, { 
+        value: typeof val === 'number' && Number.isFinite(val) ? val : 0, 
+        note: noteText,
+        formula: formula(r.expr, symbols) 
+      }));
     });
 
     var displayKeys = plan.displayRows.map(function (r) { return r.key; });
